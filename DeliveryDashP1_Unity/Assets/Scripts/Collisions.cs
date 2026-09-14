@@ -6,4 +6,9 @@ public class Collisions : MonoBehaviour
     {
         Debug.Log("Car has collided with " + collision.gameObject.name);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Car has triggered with " + collision.gameObject.name);
+    }
 }
