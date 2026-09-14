@@ -387,8 +387,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8131893555a93c4ba51577b617b3f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  steerSpeed: 1.5
-  moveSpeed: 0.05
+  steerSpeed: 150
+  moveSpeed: 10
 --- !u!212 &1695543438
 SpriteRenderer:
   serializedVersion: 3
