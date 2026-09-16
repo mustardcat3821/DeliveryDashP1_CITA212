@@ -5,10 +5,14 @@ public class Driver : MonoBehaviour
 {
     [SerializeField] float steerSpeed = 0.5f;
     [SerializeField] float moveSpeed = 0.05f;
-    
+    SpriteRenderer carRender;
+
+    bool hasPackage = false;
+    bool hasDelivered = false;
+
     void Start()
     {
-        
+        carRender = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -41,5 +45,28 @@ public class Driver : MonoBehaviour
 
         transform.Rotate(0, 0, steerFactor);
         transform.Translate(0, moveFactor, 0);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!hasPackage && other.CompareTag("Trigger"))
+        {
+            hasPackage = true;
+            hasDelivered = false;
+            Debug.Log("Player triggered with Trigger! " + other.gameObject.name);
+            Debug.Log("hasPackage: " + hasPackage);
+            carRender.color = Color.green;
+            Destroy(other.gameObject);
+        }
+
+        if (hasPackage && other.CompareTag("Customer") && other.gameObject.GetComponent<SpriteRenderer>().color != Color.green)
+        {
+            hasPackage = false;
+            hasDelivered = true;
+            Debug.Log("Player triggered with Customer! " + other.gameObject.name);
+            Debug.Log("hasDelivered: " + hasDelivered);
+            carRender.color = Color.red;
+            other.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+        }
     }
 }
