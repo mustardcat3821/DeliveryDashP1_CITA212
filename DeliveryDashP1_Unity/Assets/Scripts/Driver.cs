@@ -3,8 +3,11 @@ using UnityEngine.InputSystem;
 
 public class Driver : MonoBehaviour
 {
-    [SerializeField] float steerSpeed = 0.5f;
-    [SerializeField] float moveSpeed = 0.05f;
+    [SerializeField] float steerSpeed = 150f;
+    [SerializeField] float currentSpeed = 5f;
+
+    [SerializeField] float boostSpeed = 10f;
+    [SerializeField] float regularSpeed = 5f;
     SpriteRenderer carRender;
 
     bool hasPackage = false;
@@ -41,7 +44,7 @@ public class Driver : MonoBehaviour
         }
 
         float steerFactor = steerAmount * steerSpeed * Time.deltaTime;
-        float moveFactor = moveAmount * moveSpeed * Time.deltaTime;
+        float moveFactor = moveAmount * currentSpeed * Time.deltaTime;
 
         transform.Rotate(0, 0, steerFactor);
         transform.Translate(0, moveFactor, 0);
@@ -67,5 +70,17 @@ public class Driver : MonoBehaviour
             Debug.Log("hasDelivered: " + hasDelivered);
             GetComponent<ParticleSystem>().Stop();
         }
+
+        if (other.CompareTag("Boost"))
+        {
+            currentSpeed = boostSpeed;
+            Debug.Log("Boost activated! Current speed: " + currentSpeed);
+            Destroy(other.gameObject);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        currentSpeed = regularSpeed;
     }
 }
