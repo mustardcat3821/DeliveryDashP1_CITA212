@@ -56,6 +56,7 @@ public class Driver : MonoBehaviour
             Debug.Log("Player triggered with Package! " + other.gameObject.name);
             Debug.Log("hasPackage: " + hasPackage);
             Destroy(other.gameObject);
+            GetComponent<ParticleSystem>().Play();
         }
 
         if (hasPackage && other.CompareTag("Customer") && !hasDelivered)
@@ -64,6 +65,7 @@ public class Driver : MonoBehaviour
             hasDelivered = true;
             Debug.Log("Player triggered with Customer! " + other.gameObject.name);
             Debug.Log("hasDelivered: " + hasDelivered);
+            GetComponent<ParticleSystem>().Stop();
         }
     }
 }
