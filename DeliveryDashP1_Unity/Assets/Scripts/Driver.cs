@@ -11,6 +11,8 @@ public class Driver : MonoBehaviour
     [SerializeField] float regularSpeed = 5f;
 
     [SerializeField] TMP_Text boostText;
+    [SerializeField] AudioSource boostUpSound;
+    [SerializeField] AudioSource boostDownSound;
     SpriteRenderer carRender;
 
     bool hasPackage = false;
@@ -79,6 +81,7 @@ public class Driver : MonoBehaviour
         if (other.CompareTag("Boost"))
         {
             currentSpeed = boostSpeed;
+            boostUpSound.Play();
             boostText.gameObject.SetActive(true);
             Debug.Log("Boost activated! Current speed: " + currentSpeed);
             Destroy(other.gameObject);
@@ -87,7 +90,12 @@ public class Driver : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        currentSpeed = regularSpeed;
-        boostText.gameObject.SetActive(false);
+        if (currentSpeed != regularSpeed)
+        {
+            currentSpeed = regularSpeed;
+            boostDownSound.Play();
+            boostText.gameObject.SetActive(false);
+            Debug.Log("Boost deactivated! Current speed: " + currentSpeed);
+        }
     }
 }

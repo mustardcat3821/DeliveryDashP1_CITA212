@@ -52,6 +52,7 @@ public class timerLoop : MonoBehaviour
 
     void TimerDone()
     {
+        timerIsRunning = false;
         TimerText.text = "Time Left: 00:00";
         Debug.Log("Timer has finished!");
     }
