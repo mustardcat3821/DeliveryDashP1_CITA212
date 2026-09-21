@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class Driver : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class Driver : MonoBehaviour
 
     [SerializeField] float boostSpeed = 10f;
     [SerializeField] float regularSpeed = 5f;
+
+    [SerializeField] TMP_Text boostText;
     SpriteRenderer carRender;
 
     bool hasPackage = false;
@@ -16,6 +19,7 @@ public class Driver : MonoBehaviour
     void Start()
     {
         carRender = GetComponent<SpriteRenderer>();
+        boostText.gameObject.SetActive(false);
     }
 
     void Update()
@@ -68,12 +72,14 @@ public class Driver : MonoBehaviour
             hasDelivered = true;
             Debug.Log("Player triggered with Customer! " + other.gameObject.name);
             Debug.Log("hasDelivered: " + hasDelivered);
+            Destroy(other.gameObject);
             GetComponent<ParticleSystem>().Stop();
         }
 
         if (other.CompareTag("Boost"))
         {
             currentSpeed = boostSpeed;
+            boostText.gameObject.SetActive(true);
             Debug.Log("Boost activated! Current speed: " + currentSpeed);
             Destroy(other.gameObject);
         }
@@ -82,5 +88,6 @@ public class Driver : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         currentSpeed = regularSpeed;
+        boostText.gameObject.SetActive(false);
     }
 }
