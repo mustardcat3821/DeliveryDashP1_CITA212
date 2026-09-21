@@ -80,7 +80,7 @@ public class Driver : MonoBehaviour
 
         if (other.CompareTag("Boost"))
         {
-            currentSpeed = boostSpeed;
+            currentSpeed += boostSpeed;
             boostUpSound.Play();
             boostText.gameObject.SetActive(true);
             Debug.Log("Boost activated! Current speed: " + currentSpeed);
