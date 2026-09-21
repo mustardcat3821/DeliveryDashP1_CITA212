@@ -8,7 +8,7 @@ public class Driver : MonoBehaviour
     SpriteRenderer carRender;
 
     bool hasPackage = false;
-    bool hasDelivered = false;
+    bool hasDelivered = true;
 
     void Start()
     {
@@ -49,24 +49,21 @@ public class Driver : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!hasPackage && other.CompareTag("Trigger"))
+        if (!hasPackage && other.CompareTag("Trigger") && hasDelivered)
         {
             hasPackage = true;
             hasDelivered = false;
-            Debug.Log("Player triggered with Trigger! " + other.gameObject.name);
+            Debug.Log("Player triggered with Package! " + other.gameObject.name);
             Debug.Log("hasPackage: " + hasPackage);
-            carRender.color = Color.green;
             Destroy(other.gameObject);
         }
 
-        if (hasPackage && other.CompareTag("Customer") && other.gameObject.GetComponent<SpriteRenderer>().color != Color.green)
+        if (hasPackage && other.CompareTag("Customer") && !hasDelivered)
         {
             hasPackage = false;
             hasDelivered = true;
             Debug.Log("Player triggered with Customer! " + other.gameObject.name);
             Debug.Log("hasDelivered: " + hasDelivered);
-            carRender.color = Color.red;
-            other.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
         }
     }
 }
